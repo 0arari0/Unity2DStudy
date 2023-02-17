@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         if (isDead) return; //사망 시 처리를 더 이상 하지 않고 종료
 
         //키를 누르며 최대 점프 횟수가 2에 도달하지 않았다면
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < 2)
+        if (Input.GetMouseButtonDown(0) && jumpCount < 2)
         {
             jumpCount++;
             playerRigidbody.velocity = Vector2.zero;
@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
             playerAudio.Play();
         }
         //키에서 손을 떼는 순간 && 속도 y값이 양수이면 현재 속도를 반으로
-        else if (Input.GetKeyDown(KeyCode.Space) && playerRigidbody.velocity.y > 0)
+        else if (Input.GetMouseButtonDown(0) && playerRigidbody.velocity.y > 0)
         {
             playerRigidbody.velocity = playerRigidbody.velocity * 0.5f;
         }
@@ -51,6 +51,8 @@ public class PlayerController : MonoBehaviour
 
         playerRigidbody.velocity = Vector2.zero;
         isDead= true;
+
+        GameManager.instance.OnPlayerDead();
     }
     void OnTriggerEnter2D(Collider2D other)
     {
