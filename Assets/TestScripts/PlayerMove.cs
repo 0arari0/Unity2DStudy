@@ -5,20 +5,23 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     public float speed = 2;
-
-    float vx = 0;
-    float vy = 0;
     bool leftFlag = false;
 
     void Update()
     {
-        vx = 0;
-        vy = 0;
+        float x = Input.GetAxisRaw("Horizontal");
+        float y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKey("right"))
-        {
-            vx = speed; //오른쪽 키가 눌리면 오른쪽으로 나가아가는 이동량 넣기
-            leftFlag = false;
-        }
+        Vector3 Position = transform.position;
+
+        Position.x += x * speed * Time.deltaTime;
+        Position.y += y * speed * Time.deltaTime;
+
+        transform.position = Position;
+    }
+    void FixedUpdate()
+    {
+        //왼쪽 오른쪽 방향 바꾸기
+        this.GetComponent<SpriteRenderer>().flipX = leftFlag;
     }
 }
